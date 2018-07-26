@@ -115,9 +115,7 @@ function installkafka() {
 
 echo "==================================================================================="
 echo "Begin to setup kafka instance"
-echo "aaa:$#"
-echo "aaa:$*"
-echo "aaa:$1"
+
 
 # Install Java
 installJava
