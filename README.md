@@ -31,6 +31,8 @@ To deploy Kafka Cluster using this Module:
 module "kafkas" {
   source                           = "git::ssh://git@REPO_FQDN:7999/tfs/terraform-oci-kafkas.git?ref=dev"
   compartment_ocid                 = "${var.compartment_ocid}"
+  dns_label                        = "${var.dns_label}"
+  label_prefix                     = "${var.label_prefix}"
   ads                              = "${var.ads}"
   subnet_ids                       = "${var.subnet_ids}"
   image_id                         = "${var.image_id}"
@@ -47,6 +49,8 @@ module "kafkas" {
 Argument | Description
 --- | ---
 compartment_ocid | Compartment's OCID where VCN will be created.
+dns_label | Allows assignment of DNS hostname when launching an Instance.
+label_prefix | To create unique identifier for multiple clusters in a compartment.
 ads | The Availability Domain for instances.
 subnet_ids  | The OCID of the subnet to create the VNIC in.
 image_id | The OCID of an image for a instance to use.
