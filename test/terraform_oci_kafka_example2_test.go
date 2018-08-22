@@ -13,7 +13,7 @@ import (
 )
 
 func TestModuleKafkaExample2(t *testing.T) {
-	terraformDir := "../examples/examples-2"
+	terraformDir := "../examples/example-2"
 	terraformOptions := configureTerraformOptions(t, terraformDir)
 
 	test_structure.RunTestStage(t, "init", func() {
