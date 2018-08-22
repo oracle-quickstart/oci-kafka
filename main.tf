@@ -1,5 +1,5 @@
 ############################################
-# MySQL Master Instance
+# Kafka Instances
 ############################################
 module "kafka-instance" {
   source               = "./modules/kafka"

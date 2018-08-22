@@ -36,7 +36,7 @@ resource "oci_core_route_table" "RT" {
 ############################################
 # Create Security List
 ############################################
-resource "oci_core_security_list" "Subnet" {
+resource "oci_core_security_list" "SecurityList" {
   compartment_id = "${var.compartment_ocid}"
   display_name   = "${var.label_prefix}SecurityList"
   vcn_id         = "${oci_core_virtual_network.VCN.id}"
@@ -103,7 +103,7 @@ resource "oci_core_subnet" "SubnetAD" {
   cidr_block          = "${lookup(var.network_cidrs, "SubnetAD${count.index+1}")}"
   display_name        = "${var.label_prefix}SubnetAD${count.index+1}"
   dns_label           = "ad${count.index+1}"
-  security_list_ids   = ["${oci_core_security_list.Subnet.id}"]
+  security_list_ids   = ["${oci_core_security_list.SecurityList.id}"]
   compartment_id      = "${var.compartment_ocid}"
   vcn_id              = "${oci_core_virtual_network.VCN.id}"
   route_table_id      = "${oci_core_route_table.RT.id}"
