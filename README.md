@@ -4,6 +4,8 @@
 ## About
 The Kafka Oracle Cloud Infrastructure Module provides a Terraform-based Kafka Cluster installation for Oracle Cloud Infrastructure (OCI). This will provide user one Kafka cluster which is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, wicked fast, and runs in production in thousands of companies.
 
+![Kafka cluster architecture](docs/images/architecture.png)
+
 
 ## Prerequisites
 1. Download and install Terraform (v0.10.3 or later)
