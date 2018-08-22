@@ -23,7 +23,7 @@ variable "ssh_private_key" {
 }
 
 variable "number_of_instance" {
-  description = "The number of instance(s) to create"
+  description = "The number of instance(s) to create. "
 }
 
 variable "ads" {
