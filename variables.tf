@@ -71,3 +71,16 @@ variable "zookeeper_poll_port" {
 variable "kafka_client_port" {
   default     = "19092"
 }
+
+variable "bastion_host" {
+  description = "The bastion host IP."
+}
+
+variable "bastion_user" {
+  description = "The SSH user to connect to the bastion host."
+  default     = "opc"
+}
+
+variable "bastion_private_key" {
+  description = "The private key path to access the bastion host."
+}
