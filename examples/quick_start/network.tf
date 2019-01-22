@@ -1,70 +1,70 @@
 ############################################
 # Create VCN
 ############################################
-resource "oci_core_virtual_network" "VCN" {
+resource "oci_core_virtual_network" "KafkaVCN" {
   cidr_block     = "${lookup(var.network_cidrs, "VCN-CIDR")}"
   compartment_id = "${var.compartment_ocid}"
-  display_name   = "VCN"
-  dns_label      = "ocidns"
+  display_name   = "KafkaVCN"
+  dns_label      = "kafka"
 }
 
 ############################################
 # Create Internet Gateways
 ############################################
-resource "oci_core_internet_gateway" "IG" {
+resource "oci_core_internet_gateway" "KafkaIG" {
   compartment_id = "${var.compartment_ocid}"
-  display_name   = "${var.label_prefix}IG"
-  vcn_id         = "${oci_core_virtual_network.VCN.id}"
+  display_name   = "${var.label_prefix}KafkaIG"
+  vcn_id         = "${oci_core_virtual_network.KafkaVCN.id}"
 }
 
 ############################################
 # Create NAT Gateway
 ############################################
-resource "oci_core_nat_gateway" "NG" {
+resource "oci_core_nat_gateway" "KafkaNG" {
   compartment_id = "${var.compartment_ocid}"
-  vcn_id         = "${oci_core_virtual_network.VCN.id}"
-  display_name   = "NG"
+  vcn_id         = "${oci_core_virtual_network.KafkaVCN.id}"
+  display_name   = "KafkaNG"
 }
 
 
 ############################################
 # Create Route Table
 ############################################
-resource "oci_core_route_table" "PublicRT" {
+resource "oci_core_route_table" "KafkaPublicRT" {
   compartment_id = "${var.compartment_ocid}"
-  vcn_id         = "${oci_core_virtual_network.VCN.id}"
-  display_name   = "${var.label_prefix}PublicRT"
+  vcn_id         = "${oci_core_virtual_network.KafkaVCN.id}"
+  display_name   = "${var.label_prefix}KafkaPublicRT"
 
   route_rules {
     cidr_block = "0.0.0.0/0"
     destination_type = "CIDR_BLOCK"
 
     # Internet Gateway route target for instances on public subnets
-    network_entity_id = "${oci_core_internet_gateway.IG.id}"
+    network_entity_id = "${oci_core_internet_gateway.KafkaIG.id}"
   }
 }
 
-resource "oci_core_route_table" "PrivateRT" {
+resource "oci_core_route_table" "KafkaPrivateRT" {
   compartment_id = "${var.compartment_ocid}"
-  vcn_id         = "${oci_core_virtual_network.VCN.id}"
-  display_name   = "PrivateRT"
+  vcn_id         = "${oci_core_virtual_network.KafkaVCN.id}"
+  display_name   = "KafkaPrivateRT"
 
   route_rules {
     cidr_block       = "0.0.0.0/0"
     destination_type = "CIDR_BLOCK"
 
     # Internet Gateway route target for instances on public subnets
-    network_entity_id = "${oci_core_nat_gateway.NG.id}"
+    network_entity_id = "${oci_core_nat_gateway.KafkaNG.id}"
   }
 }
 
 ############################################
 # Create Security List
 ############################################
-resource "oci_core_security_list" "Private" {
+resource "oci_core_security_list" "KafkaPrivate" {
   compartment_id = "${var.compartment_ocid}"
-  display_name   = "${var.label_prefix}private"
-  vcn_id         = "${oci_core_virtual_network.VCN.id}"
+  display_name   = "${var.label_prefix}KafkaPrivate"
+  vcn_id         = "${oci_core_virtual_network.KafkaVCN.id}"
 
   egress_security_rules = [{
     destination = "0.0.0.0/0"
@@ -122,11 +122,11 @@ resource "oci_core_security_list" "Private" {
 resource "oci_core_security_list" "bastion" {
   compartment_id = "${var.compartment_ocid}"
   display_name   = "bastion"
-  vcn_id         = "${oci_core_virtual_network.VCN.id}"
+  vcn_id         = "${oci_core_virtual_network.KafkaVCN.id}"
 
   egress_security_rules = [{
     protocol    = "6"
-    destination = "${var.vcn_cidr}"
+    destination =  "${lookup(var.network_cidrs, "VCN-CIDR")}"
   }]
 
   ingress_security_rules = [{
@@ -143,7 +143,7 @@ resource "oci_core_security_list" "bastion" {
 resource "oci_core_security_list" "nat" {
   compartment_id = "${var.compartment_ocid}"
   display_name   = "nat"
-  vcn_id         = "${oci_core_virtual_network.VCN.id}"
+  vcn_id         = "${oci_core_virtual_network.KafkaVCN.id}"
 
   egress_security_rules = [{
     protocol    = "6"
@@ -152,7 +152,7 @@ resource "oci_core_security_list" "nat" {
 
   ingress_security_rules = [{
     protocol = "6"
-    source   = "${var.vcn_cidr}"
+    source   =  "${lookup(var.network_cidrs, "VCN-CIDR")}"
   }]
 }
 
@@ -165,11 +165,11 @@ resource "oci_core_subnet" "SubnetAD" {
   cidr_block          = "${lookup(var.network_cidrs, "SubnetAD${count.index+1}")}"
   display_name        = "${var.label_prefix}SubnetAD${count.index+1}"
   dns_label           = "ad${count.index+1}"
-  security_list_ids   = ["${oci_core_security_list.Subnet.id}"]
+  security_list_ids   = ["${oci_core_security_list.KafkaPrivate.id}"]
   compartment_id      = "${var.compartment_ocid}"
-  vcn_id              = "${oci_core_virtual_network.VCN.id}"
-  route_table_id      = "${oci_core_route_table.PrivateRT.id}"
-  dhcp_options_id     = "${oci_core_virtual_network.VCN.default_dhcp_options_id}"
+  vcn_id              = "${oci_core_virtual_network.KafkaVCN.id}"
+  route_table_id      = "${oci_core_route_table.KafkaPrivateRT.id}"
+  dhcp_options_id     = "${oci_core_virtual_network.KafkaVCN.default_dhcp_options_id}"
 }
 
 ############################################
@@ -181,7 +181,7 @@ resource "oci_core_subnet" "bastion" {
   display_name        = "BastionAD${var.bastion_ad_index+1}"
   cidr_block          = "${cidrsubnet(local.bastion_subnet_prefix, 3, 0)}"
   security_list_ids   = ["${oci_core_security_list.bastion.id}"]
-  vcn_id              = "${oci_core_virtual_network.VCN.id}"
-  route_table_id      = "${oci_core_route_table.PublicRT.id}"
-  dhcp_options_id     = "${oci_core_virtual_network.VCN.default_dhcp_options_id}"
+  vcn_id              = "${oci_core_virtual_network.KafkaVCN.id}"
+  route_table_id      = "${oci_core_route_table.KafkaPublicRT.id}"
+  dhcp_options_id     = "${oci_core_virtual_network.KafkaVCN.default_dhcp_options_id}"
 }

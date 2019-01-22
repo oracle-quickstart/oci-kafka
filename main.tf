@@ -1,5 +1,5 @@
 ############################################
-# MySQL Master Instance
+# Kafka Instance
 ############################################
 module "kafka-instance" {
   source               = "./modules/kafka"
@@ -62,7 +62,7 @@ resource "null_resource" "remote-exec-cluster-setup" {
   count = "${var.number_of_instance}"
   provisioner "file" {
     connection = {
-      host        = "${element(module.kafka-instance.public_ips, count.index)}"
+      host        = "${element(module.kafka-instance.private_ips, count.index)}"
       agent       = false
       timeout     = "5m"
       user        = "opc"
@@ -77,7 +77,7 @@ resource "null_resource" "remote-exec-cluster-setup" {
 
   provisioner "remote-exec" {
     connection = {
-      host        = "${element(module.kafka-instance.public_ips, count.index)}"
+      host        = "${element(module.kafka-instance.private_ips, count.index)}"
       agent       = false
       timeout     = "5m"
       user        = "opc"

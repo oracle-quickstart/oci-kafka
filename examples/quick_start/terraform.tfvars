@@ -30,4 +30,8 @@ ssh_authorized_keys = "C:/Users/jinx/.ssh/id_rsa.pub"
 
 ssh_private_key = "C:/Users/jinx/.ssh/id_rsa"
 
-subnet_ids = ["ocid1.subnet.oc1.phx.aaaaaaaamdrtxxug7qv72cbwqhbw3sle3axq6irj26xapcg2fix7gsum6xoa", "ocid1.subnet.oc1.phx.aaaaaaaaaqvypodhwi5zpfspmuvu6s2sm2yzjy4fpzo4jau4vnzzwjh3476a", "ocid1.subnet.oc1.phx.aaaaaaaaats3obrnczlkkbnvhwzy6qc425iqo3mybvmh4eaikmw5r74ng35a"]
+bastion_authorized_keys = "C:/Users/jinx/.ssh/id_rsa.pub"
+
+bastion_private_key = "C:/Users/jinx/.ssh/id_rsa"
+
+#subnet_ids = ["ocid1.subnet.oc1.phx.aaaaaaaamdrtxxug7qv72cbwqhbw3sle3axq6irj26xapcg2fix7gsum6xoa", "ocid1.subnet.oc1.phx.aaaaaaaaaqvypodhwi5zpfspmuvu6s2sm2yzjy4fpzo4jau4vnzzwjh3476a", "ocid1.subnet.oc1.phx.aaaaaaaaats3obrnczlkkbnvhwzy6qc425iqo3mybvmh4eaikmw5r74ng35a"]

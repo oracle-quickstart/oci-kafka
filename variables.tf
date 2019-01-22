@@ -48,7 +48,7 @@ variable "image_id" {
 
 variable "shape" {
   description = "Instance shape to use for instance. "
-  default     = "VM.Standard1.1"
+  default     = "VM.Standard2.1"
 }
 
 variable "user_data" {

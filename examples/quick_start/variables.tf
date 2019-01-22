@@ -57,7 +57,7 @@ variable "bastion_ad_index" {
 }
 
 variable "bastion_display_name" {
-  default = "bastion"
+  default = "kafkaBastion"
 }
 
 variable "bastion_shape" {
@@ -74,4 +74,15 @@ variable "bastion_user" {
 
 variable "bastion_authorized_keys" {}
 variable "bastion_private_key" {}
+
+variable "number_of_instance" {
+  default = 3
+}
+
+locals {
+
+  dmz_tier_prefix = "${cidrsubnet("${lookup(var.network_cidrs, "VCN-CIDR")}", 2, 0)}"
+
+  bastion_subnet_prefix = "${cidrsubnet("${local.dmz_tier_prefix}", 2, 1)}"
+}
 
