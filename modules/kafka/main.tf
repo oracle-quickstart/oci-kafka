@@ -40,29 +40,35 @@ resource "oci_core_instance" "TFKafkaNode" {
 
   provisioner "file" {
     connection = {
-      host        = "${self.public_ip}"
+      host        = "${self.private_ip}"
       agent       = false
       timeout     = "5m"
-      user        = "opc"
+      user        = "${var.vm_user}"
       private_key = "${file("${var.ssh_private_key}")}"
+      bastion_host        = "${var.bastion_host}"
+      bastion_user        = "${var.bastion_user}"
+      bastion_private_key = "${file("${var.bastion_private_key}")}"
     }
 
     content     = "${data.template_file.kafka_setup.rendered}"
-    destination = "/tmp/setup.sh"
+    destination = "~/setup.sh"
   }
 
   provisioner "remote-exec" {
     connection = {
-      host        = "${self.public_ip}"
+      host        = "${self.private_ip}"
       agent       = false
       timeout     = "5m"
-      user        = "opc"
+      user        = "${var.vm_user}"
       private_key = "${file("${var.ssh_private_key}")}"
+      bastion_host        = "${var.bastion_host}"
+      bastion_user        = "${var.bastion_user}"
+      bastion_private_key = "${file("${var.bastion_private_key}")}"
     }
 
     inline = [
-      "chmod +x /tmp/setup.sh",
-      "/tmp/setup.sh ${self.display_name} >> /home/opc/kafka_setup.log",
+      "chmod +x ~/setup.sh",
+      "~/setup.sh ${self.display_name} >> /home/opc/kafka_setup.log",
     ]
   }
 }

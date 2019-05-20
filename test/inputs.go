@@ -1,12 +1,14 @@
 package test
 
 type Inputs struct {
-	TenancyOcid       string `json:"tenancy_ocid"`
-	CompartmentOcid   string `json:"compartment_ocid"`
-	UserOcid          string `json:"user_ocid"`
-	Region            string `json:"region"`
-	Fingerprint       string `json:"fingerprint"`
-	PrivateKeyPath    string `json:"private_key_path"`
-	SSHAuthorizedKeys string `json:"ssh_authorized_keys"`
-	SSHPrivateKey     string `json:"ssh_private_key"`
+	Tenancy_ocid            string `json:"tenancy_ocid"`
+	Compartment_ocid        string `json:"compartment_ocid"`
+	User_ocid               string `json:"user_ocid"`
+	Region                  string `json:"region"`
+	Fingerprint             string `json:"fingerprint"`
+	Private_key_path        string `json:"private_key_path"`
+	Ssh_authorized_keys     string `json:"ssh_authorized_keys"`
+	Ssh_private_key         string `json:"ssh_private_key"`
+	Bastion_authorized_keys string `json:"bastion_authorized_keys"`
+	Bastion_private_key     string `json:"bastion_private_key"`
 }

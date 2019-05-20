@@ -48,7 +48,7 @@ variable "image_id" {
 
 variable "shape" {
   description = "Instance shape to use for instance. "
-  default     = "VM.Standard1.1"
+  default     = "VM.Standard2.1"
 }
 
 variable "user_data" {
@@ -70,4 +70,17 @@ variable "zookeeper_poll_port" {
 
 variable "kafka_client_port" {
   default     = "19092"
+}
+
+variable "bastion_host" {
+  description = "The bastion host IP."
+}
+
+variable "bastion_user" {
+  description = "The SSH user to connect to the bastion host."
+  default     = "opc"
+}
+
+variable "bastion_private_key" {
+  description = "The private key path to access the bastion host."
 }
