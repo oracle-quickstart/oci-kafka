@@ -1,17 +1,16 @@
 # Oracle Cloud Infrastructure Kafka Terraform Module
 
+These are Terraform modules that deploy [Kafka](https://kafka.apache.org/) on [Oracle Cloud Infrastructure (OCI)](https://cloud.oracle.com/en_US/cloud-infrastructure).
 
 ## About
 The Kafka Oracle Cloud Infrastructure Module provides a Terraform-based Kafka Cluster installation for Oracle Cloud Infrastructure (OCI). This will provide user one Kafka cluster which is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, wicked fast, and runs in production in thousands of companies.
 
 ![Kafka cluster architecture](docs/images/architecture.png)
 
-
 ## Prerequisites
 1. Download and install Terraform (v0.10.3 or later)
 2. Download and install the OCI Terraform Provider (v2.0.0 or later)
 3. Export OCI credentials. (this refer to the https://github.com/oracle/terraform-provider-oci )
-
 
 ## What's a Module?
 A Module is a canonical, reusable, best-practices definition for how to run a single piece of infrastructure, such as a database or server cluster. Each Module is created using Terraform, and includes automated tests, examples, and documentation. It is maintained both by the open source community and companies that provide commercial support.
@@ -61,8 +60,3 @@ kafka_client_port | The client port for Kafka.
 number_of_instance | The number of instance(s) to create.
 ssh_authorized_keys | Public SSH keys path to be included in the ~/.ssh/authorized_keys file for the default user on the instance.
 ssh_private_key | The private key path to access instance.
-
-
-
-## Contributing
-This project is open source. Oracle appreciates any contributions that are made by the open source community.
