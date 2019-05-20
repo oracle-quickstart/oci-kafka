@@ -75,7 +75,7 @@ function installkafka() {
   mkdir kafka
   cd kafka
   mkdir kafkalogs
-  wget http://ftp.jaist.ac.jp/pub/apache/kafka/1.1.0/kafka_2.12-1.1.0.tgz
+  wget https://archive.apache.org/dist/kafka/1.1.0/kafka_2.12-1.1.0.tgz
   tar -xzf kafka_2.12-1.1.0.tgz
   cd ~/opt/kafka/kafka_2.12-1.1.0/config/
 
