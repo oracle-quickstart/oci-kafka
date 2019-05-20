@@ -9,7 +9,7 @@ variable "availability_domains" {
 }
 
 variable "kafka_display_name" {
-  description = "The name of the elasticsearch instance. "
+  description = "The name of the kafka instance. "
   default     = ""
 }
 

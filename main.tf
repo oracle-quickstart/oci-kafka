@@ -1,5 +1,4 @@
-############################################
-# Kafka Instance
+# Kafka Instances
 ############################################
 module "kafka-instance" {
   source               = "./modules/kafka"
