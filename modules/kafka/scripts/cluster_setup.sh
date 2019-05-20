@@ -31,5 +31,6 @@ nohup ./zookeeper-3.4.10/bin/zkServer.sh start > /home/opc/zookeeper.out 2>&1 &
 sleep 60
 nohup /home/opc/opt/kafka/kafka_2.12-1.1.0/bin/kafka-server-start.sh /home/opc/opt/kafka/kafka_2.12-1.1.0/config/server.properties > /home/opc/kafka.out 2>&1 &
 sleep 10
-echo "========================================================================="
 echo "End to config Kafka"
+echo "========================================================================="
+
